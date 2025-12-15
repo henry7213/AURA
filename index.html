@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA - Immersive Soundscapes</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/webico.ico">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Preload Audio Assets -->
+    <link rel="preload" href="assets/sounds/rain.mp3" as="audio">
+    <link rel="preload" href="assets/sounds/ocean-waves.mp3" as="audio">
+    <link rel="preload" href="assets/sounds/wind.mp3" as="audio">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+    <div id="scene-layer" class="scene-layer"></div>
+    <div id="foreground-layer" class="foreground-layer"></div>
+
+    <div class="app-container">
+        <!-- Welcome Overlay -->
+        <div id="welcome-overlay" class="welcome-overlay">
+            <div class="overlay-decoration"></div>
+            <div class="welcome-content">
+                <div class="headphones-hint">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24"
+                        height="24">
+                        <path
+                            d="M12 3a9 9 0 0 0-9 9v7c0 1.1.9 2 2 2h4v-8H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-4v8h4c1.1 0 2-.9 2-2v-7a9 9 0 0 0-9-9z" />
+                    </svg>
+                    <span>建議配戴耳機</span>
+                </div>
+                <!-- AURA Title with specific class for styling -->
+                <h1>AURA</h1>
+                <p class="overlay-description">
+                    Immersive Soundscapes<br>
+                    探索午夜海岬、迷霧森林與溫暖營火的沉浸世界
+                </p>
+                <button id="enter-btn" class="enter-btn">開始體驗</button>
+            </div>
+        </div>
+        <header class="main-header">
+            <h1>AURA</h1>
+            <p class="subtitle">Immersive Soundscapes</p>
+        </header>
+
+        <div class="theme-switcher-container">
+            <div class="slider-labels">
+                <span class="slider-label" data-target="0">午夜海岬</span>
+                <span class="slider-label" data-target="1">迷霧森林</span>
+                <span class="slider-label" data-target="2">溫暖營火</span>
+            </div>
+            <div class="slider-wrapper">
+                <input type="range" min="0" max="2" value="0" class="theme-slider" id="theme-slider">
+            </div>
+        </div>
+
+        <!-- Split Experience Panel -->
+        <div class="content-area" id="experience-panel">
+            <!-- Collapsible Intro Card -->
+            <div class="card intro-card" id="intro-card">
+                <div class="panel-header">
+                    <h2 id="theme-title-display">午夜海岬</h2>
+                    <button id="toggle-intro-btn" class="toggle-btn" aria-label="Toggle Intro">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 15l-6-6-6 6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="intro-content" id="intro-content">
+                    <div id="theme-description" class="theme-intro">
+                        <p>此刻，您佇立於午夜的海岬。冰冷的雨絲、洶湧的海浪與呼嘯的海風交織，帶走所有的煩惱，只留下大自然的壯闊與寧靜。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Persistent Controls Card -->
+            <div class="card controls-card">
+                <div class="sound-controls">
+                    <div class="sound-item">
+                        <span class="sound-icon">🌧️</span>
+                        <div class="sound-info">
+                            <label>雨聲強度</label>
+                            <input type="range" min="0" max="100" value="50" class="volume-slider">
+                        </div>
+                    </div>
+                    <div class="sound-item">
+                        <span class="sound-icon">🌊</span>
+                        <div class="sound-info">
+                            <label>海浪頻率</label>
+                            <input type="range" min="0" max="100" value="50" class="volume-slider">
+                        </div>
+                    </div>
+                    <div class="sound-item">
+                        <span class="sound-icon">💨</span>
+                        <div class="sound-info">
+                            <label>風聲流動</label>
+                            <input type="range" min="0" max="100" value="50" class="volume-slider">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="breathing-container">
+                    <div class="breathing-circle"></div>
+                    <p class="breathing-text"></p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+            <p>&copy; 2025 Immersive Experience</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
