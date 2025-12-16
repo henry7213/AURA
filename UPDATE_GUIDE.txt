@@ -1,0 +1,59 @@
+# AURA 專案更新與部署指南
+
+這份文件說明當您修改了程式碼（HTML/CSS/JS）或是新增了功能後，如何將變更更新到網站上。
+
+## 1. 快速部署到 Firebase (讓網站生效)
+
+如果您只想讓公開網站 (aura-3435c.web.app) 更新，請在終端機 (Terminal) 執行以下指令：
+
+```bash
+firebase deploy
+```
+
+執行後，看到 `Deploy complete!` 即表示更新完成。
+
+---
+
+## 2. 完整開發流程 (建議做法)
+
+為了保持良好的開發習慣，建議依照以下三個步驟進行：
+
+### 步驟 A：本地修改與測試
+1. 在 VS Code 中修改您的檔案 (例如 `index.html`, `style.css`)。
+2. 修改存檔後，直接用瀏覽器開啟 `index.html` 確認功能正常。
+
+### 步驟 B：備份到 GitHub (版本控制)
+確保您的程式碼有雲端備份，且多人協作時不會衝突。
+
+```bash
+# 1. 將所有變更加入暫存區
+git add .
+
+# 2. 提交變更 (請將引號內的文字改成您這次修改的說明)
+git commit -m "更新了某些功能..."
+
+# 3. 推送到 GitHub
+git push
+```
+
+*注意：如果您新增了新的 MP3 音訊檔，該檔案會自動透過 Git LFS 上傳（因為我們已經設定好追蹤規則），上傳時間可能會較長，請耐心等待。*
+
+### 步驟 C：發布到 Firebase (公開上線)
+最後，將確認無誤的版本推送到網站伺服器。
+
+```bash
+firebase deploy
+```
+
+---
+
+## 3. 常見問題
+
+**Q: 如果我增加了新的音效檔案？**
+A: 直接將 .mp3 檔案放入 `assets/sounds/` 資料夾，然後依照上述 **步驟 B** (Git) 和 **步驟 C** (Firebase) 執行即可。LFS 會自動處理大檔案。
+
+**Q: 只有修改文字或 CSS，也要這麼麻煩嗎？**
+A: 如果只是想快速看效果，可以直接執行 `firebase deploy`。但為了不丟失進度，建議定期執行 **步驟 B** (Git 上傳)。
+
+**Q: 遇到此電腦上已停用執行指令碼的錯誤？**
+A: 這通常是 PowerShell 權限問題。可以嘗試在 VS Code 終端機改用 "Command Prompt (cmd)"，或者執行 `Set-ExecutionPolicy RemoteSigned -Scope Process` 來暫時允許。
