@@ -191,10 +191,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function createSceneParticles(theme) {
         elements.scene.innerHTML = '';
         const s = elements.scene;
+        const isMobile = window.innerWidth < 768;
+
+        // Mobile Optimization: Significantly reduce particle count
+        // Desktop: use first value, Mobile: use second value
+        const getCount = (desktop, mobile) => isMobile ? mobile : desktop;
 
         if (theme === 'deep-night') {
-            // Stars
-            for (let i = 0; i < 60; i++) {
+            // Stars: 60 -> 20
+            const starCount = getCount(60, 20);
+            for (let i = 0; i < starCount; i++) {
                 const size = random(1, 3);
                 createEl('div', ['particle'], s, {
                     width: `${size}px`, height: `${size}px`,
@@ -203,15 +209,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     animationDelay: `${random(0, 5)}s`
                 });
             }
-            // Wind
-            for (let i = 0; i < 5; i++) {
+            // Wind: 5 -> 2
+            const windCount = getCount(5, 2);
+            for (let i = 0; i < windCount; i++) {
                 createEl('div', ['wind-gust'], s, {
                     width: `${random(100, 300)}px`, top: `${random(0, 80)}%`,
                     animationDelay: `${random(0, 5)}s`, animationDuration: `${random(0.5, 1)}s`
                 });
             }
-            // Clouds
-            for (let i = 0; i < 5; i++) {
+            // Clouds: 5 -> 2
+            const cloudCount = getCount(5, 2);
+            for (let i = 0; i < cloudCount; i++) {
                 const width = random(200, 500);
                 createEl('div', ['night-cloud'], s, {
                     width: `${width}px`, height: `${width * 0.6}px`,
@@ -220,8 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     animationDelay: `${random(-60, 0)}s`
                 });
             }
-            // Rain
-            for (let i = 0; i < 100; i++) {
+            // Rain: 100 -> 25 (Major performance saver)
+            const rainCount = getCount(100, 25);
+            for (let i = 0; i < rainCount; i++) {
                 createEl('div', ['rain'], s, {
                     left: `${random(0, 100)}%`, top: `${random(-20, 0)}%`,
                     height: `${random(10, 30)}px`, opacity: random(0.1, 0.6),
@@ -230,21 +239,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             // Waves & Lighthouse
+            // On mobile, simplify layers if needed, but CSS handles layout
             const waveContainer = createEl('div', ['ocean-wave'], s);
             ['wave-back', 'wave-mid', 'wave-front'].forEach(cls => createEl('div', ['wave-layer', cls], waveContainer));
 
             const lighthouse = createEl('div', ['lighthouse'], s);
             createEl('div', ['lighthouse-glow'], lighthouse);
+
+            // Beam calculation is expensive, reduce intensity or opacity on mobile (handled in CSS filters)
             createEl('div', ['lighthouse-beam'], lighthouse);
             createEl('div', ['sea-mist'], s);
 
         } else if (theme === 'misty-forest') {
-            // God Rays
-            for (let i = 0; i < 3; i++) {
+            // God Rays: 3 -> 1
+            const rayCount = getCount(3, 1);
+            for (let i = 0; i < rayCount; i++) {
                 createEl('div', ['god-ray'], s, { left: `${20 + i * 30}%`, animationDelay: `${i * 2}s` });
             }
-            // Fog
-            for (let i = 0; i < 5; i++) {
+            // Fog: 5 -> 2
+            const fogCount = getCount(5, 2);
+            for (let i = 0; i < fogCount; i++) {
                 createEl('div', ['particle'], s, {
                     width: '150%', height: '200px', left: '-25%', top: `${random(0, 100)}%`,
                     background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
@@ -252,16 +266,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     animationDelay: `${random(-20, 0)}s`
                 });
             }
-            // Leaves
-            for (let i = 0; i < 30; i++) {
+            // Leaves: 30 -> 10
+            const leafCount = getCount(30, 10);
+            for (let i = 0; i < leafCount; i++) {
                 createEl('div', ['leaf'], s, {
                     left: `${random(0, 100)}%`, top: `${random(-20, 0)}%`,
                     animation: `leaf-fall ${random(8, 13)}s infinite linear`,
                     animationDelay: `${random(0, 10)}s`
                 });
             }
-            // Fireflies
-            for (let i = 0; i < 20; i++) {
+            // Fireflies: 20 -> 5
+            const fireflyCount = getCount(20, 5);
+            for (let i = 0; i < fireflyCount; i++) {
                 const fly = createEl('div', ['firefly'], s, {
                     left: `${random(0, 100)}%`, top: `${random(0, 100)}%`,
                     animation: `fly ${random(5, 10)}s infinite ease-in-out alternate`,
@@ -272,8 +288,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         } else if (theme === 'warm-ember') {
-            // Stars
-            for (let i = 0; i < 50; i++) {
+            // Stars: 50 -> 15
+            const starCount = getCount(50, 15);
+            for (let i = 0; i < starCount; i++) {
                 const size = random(1, 3);
                 createEl('div', ['ember-star'], s, {
                     width: `${size}px`, height: `${size}px`,
@@ -284,8 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
             createEl('div', ['campfire-glow'], s);
             createEl('div', ['heat-haze'], s);
 
-            // Embers - Increased count and variety
-            for (let i = 0; i < 80; i++) {
+            // Embers: 80 -> 25
+            const emberCount = getCount(80, 25);
+            for (let i = 0; i < emberCount; i++) {
                 const size = random(2, 6);
                 createEl('div', ['particle'], s, {
                     width: `${size}px`, height: `${size}px`,
@@ -296,12 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     animationDelay: `${random(0, 5)}s`
                 });
             }
-            // Smoke & Ash - Denser atmosphere
-            for (let i = 0; i < 30; i++) createEl('div', ['smoke'], s, {
+            // Smoke: 30 -> 8
+            const smokeCount = getCount(30, 8);
+            for (let i = 0; i < smokeCount; i++) createEl('div', ['smoke'], s, {
                 left: `${random(0, 100)}%`, bottom: '-50px',
                 animation: `smoke-rise ${random(10, 20)}s infinite linear`, animationDelay: `${random(0, 10)}s`
             });
-            for (let i = 0; i < 40; i++) createEl('div', ['ash'], s, {
+            // Ash: 40 -> 10
+            const ashCount = getCount(40, 10);
+            for (let i = 0; i < ashCount; i++) createEl('div', ['ash'], s, {
                 left: `${random(0, 100)}%`, top: `${random(0, 100)}%`,
                 animation: `ash-float ${random(5, 15)}s infinite linear`, animationDelay: `${random(0, 5)}s`
             });

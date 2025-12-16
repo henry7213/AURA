@@ -1246,19 +1246,146 @@ body {
     letter-spacing: 0.25em;
 }
 
-/* RWD for Overlay */
-@media (max-width: 600px) {
-    .welcome-content h1 {
-        font-size: 2.2rem;
+.enter-btn {
+    padding: 1rem 3rem;
+    font-size: 1rem;
+}
+}
+
+/* =========================================
+   Mobile Optimization & RWD Fixes
+   ========================================= */
+@media (max-width: 768px) {
+    /* --- Layout Fixes (RWD) --- */
+
+    body {
+        /* Prevent bounce scroll on iOS */
+        overscroll-behavior-y: none;
     }
 
-    .overlay-description {
-        font-size: 0.95rem;
-        margin-bottom: 3rem;
+    .app-container {
+        padding: 1rem;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
-    .enter-btn {
-        padding: 1rem 3rem;
-        font-size: 1rem;
+    .main-header h1 {
+        font-size: 2rem;
+        letter-spacing: 0.05em;
+    }
+
+    .theme-switcher-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .slider-labels {
+        font-size: 0.75rem;
+        padding: 0;
+    }
+
+    .slider-label {
+        padding: 5px;
+        /* Increase touch target */
+    }
+
+    /* Adjust Content Layout */
+    .content-area {
+        gap: 1rem;
+        padding-bottom: 4rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .card h2 {
+        font-size: 1.1rem;
+    }
+
+    .sound-item {
+        margin-bottom: 0.8rem;
+        gap: 0.5rem;
+    }
+
+    .sound-item label {
+        width: 70px;
+        font-size: 0.85rem;
+    }
+
+    /* --- Performance Optimization (Lag Fixes) --- */
+
+    /* 1. Disable Backpack Filter (Glassmorphism) - Major Performance Hog */
+    .card,
+    .theme-slider,
+    .welcome-overlay,
+    .enter-btn,
+    .heat-haze {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        /* Reduce shadow calculation */
+    }
+
+    /* 2. Fallback styles since glass effect is gone */
+    .welcome-overlay {
+        background: rgba(5, 8, 16, 0.98);
+        /* Almost solid background */
+    }
+
+    .card {
+        /* Use solid semi-transparent colors instead of blur */
+        background-color: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        --card-bg: rgba(15, 23, 36, 0.95);
+    }
+
+    [data-theme="misty-forest"] .card {
+        --card-bg: rgba(15, 31, 26, 0.95);
+    }
+
+    [data-theme="warm-ember"] .card {
+        --card-bg: rgba(62, 39, 35, 0.95);
+    }
+
+    .theme-slider {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* 3. Disable or Simplify Expensive Animations */
+    .overlay-decoration {
+        display: none;
+        /* Hide complex gradient background */
+    }
+
+    .lighthouse-beam,
+    .god-ray,
+    .night-cloud,
+    .forest-back,
+    .forest-mid {
+        /* Reduce blur radii significantly */
+        filter: blur(0px) !important;
+        opacity: 0.6;
+    }
+
+    /* Prevent horizontal overflow from background elements */
+    .ocean-wave,
+    .wave-layer {
+        width: 100vw;
+        max-width: 100%;
+        animation-duration: 0s !important;
+        /* Stop complex wave animation on mobile if severe lag persists */
+    }
+
+    /* 4. Improve Touch Targets */
+    .volume-slider {
+        height: 12px;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
     }
 }
